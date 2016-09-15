@@ -1,0 +1,13 @@
+
+Etape 1 : gyroscope
+connaître l'angle et la vitesse de la moto
+
+Etape 2 : servocommande
+contrôler la fourche pour garder la moto droite
+
+Etape 3 : prototype
+installation sur pocket bike
+crémaillère ou chaîne  pour la fourche
+
+Etape 4 : guidage distant
+intégrer une télécommande et savoir faire tourner la moto
