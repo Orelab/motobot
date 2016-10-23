@@ -8,6 +8,8 @@ import tornado.web
 
 from servo import Servo
 from gyro import Gyro
+from led import Led
+from gps import Gps
 
 
 
@@ -41,6 +43,12 @@ class Tache(Thread):
         if(self.task == "webserver"):
                 self.webserver()
 
+        if(self.task == "led"):
+                self.led()
+
+        if(self.task == "gps"):
+                self.gps()
+
     def gyro(self):
 		while True:
 			gyro.update()
@@ -58,7 +66,14 @@ class Tache(Thread):
         app.listen(8080)
         tornado.ioloop.IOLoop.current().start()
 
+    def led(self):
+    	led.start()
 
+    def gps(self):
+		while True:
+			gps.update()
+			time.sleep(0.1)
+        
 
 
 
@@ -66,14 +81,20 @@ if __name__ == "__main__":
 
 	gyro = Gyro()
 	servo = Servo()
+	led = Led()
+	gps = Gps()
 
 	tgy = Tache("gyro")
 	tse = Tache("servo")
 	tws = Tache("webserver")
+	tle = Tache("led")
+	tgp = Tache("gps")
 
 	tgy.start()
 	tse.start()
 	tws.start()
+	tle.start()
+	tgp.start()
 
 	try:
 		while True:
