@@ -78,6 +78,7 @@ class Gyro():
 		self.accel_scaled_y = self.twos_compliment((raw_accel_data[2] << 8) + raw_accel_data[3]) / self.accel_scale
 		self.accel_scaled_z = self.twos_compliment((raw_accel_data[4] << 8) + raw_accel_data[5]) / self.accel_scale
 
+
 	def twos_compliment(self, val):
 		if (val >= 0x8000):
 			return -((65535 - val) + 1)

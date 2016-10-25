@@ -10,7 +10,7 @@ from servo import Servo
 from gyro import Gyro
 from led import Led
 from gps import Gps
-
+from log import Log
 
 
 
@@ -34,20 +34,7 @@ class Tache(Thread):
         self.task = task
 
     def run(self):
-        if(self.task == "gyro"):
-                self.gyro()
-
-        if(self.task == "servo"):
-                 self.servo()
-
-        if(self.task == "webserver"):
-                self.webserver()
-
-        if(self.task == "led"):
-                self.led()
-
-        if(self.task == "gps"):
-                self.gps()
+    	getattr(self, self.task)()
 
     def gyro(self):
 		while True:
@@ -67,12 +54,22 @@ class Tache(Thread):
         tornado.ioloop.IOLoop.current().start()
 
     def led(self):
-    	led.start()
+		while True:
+			led.blink()
+			time.sleep(.5)	# blinking takes .5 second, so the entire cycle runs 1 second
 
     def gps(self):
 		while True:
 			gps.update()
 			time.sleep(0.1)
+
+    def log(self):
+		global gps
+		global gyro
+
+		while True:
+			log.write(gps, gyro)
+			time.sleep(0.5)
         
 
 
@@ -83,18 +80,21 @@ if __name__ == "__main__":
 	servo = Servo()
 	led = Led()
 	gps = Gps()
+	log = Log()
 
 	tgy = Tache("gyro")
 	tse = Tache("servo")
 	tws = Tache("webserver")
 	tle = Tache("led")
 	tgp = Tache("gps")
+	tlo = Tache("log")
 
 	tgy.start()
 	tse.start()
 	tws.start()
 	tle.start()
 	tgp.start()
+	tlo.start()
 
 	try:
 		while True:

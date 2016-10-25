@@ -22,7 +22,7 @@ class Gps():
 		self.altitude = ""
 
 		self.ser = serial.Serial(
-		    port='/dev/ttyACM1',\
+		    port='/dev/ttyACM0',\
 		    baudrate=9600,\
 		    parity=serial.PARITY_NONE,\
 		    stopbits=serial.STOPBITS_ONE,\
@@ -133,14 +133,14 @@ class Gps():
 				self.latitude = str(gpsData['decimal_latitude'])
 				self.longitude = str(gpsData['decimal_longitude'])
 				self.altitude = str(gpsData['altitude'])
-
+			"""
 				print "lat=" + self.latitude \
 				   + " lng=" + self.longitude \
 				   + " alt=" + self.altitude
 
 			else:
 				print "GPS desynchronized"
-
+			"""
 
 
 	def stop(self):
